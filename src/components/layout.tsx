@@ -1,7 +1,7 @@
 /** @jsx jsx */
-import { Styled, jsx } from 'theme-ui';
-import React from 'react';
-import 'normalize.css';
+import { Styled, jsx } from 'theme-ui'
+import React from 'react'
+import 'normalize.css'
 
 const Layout: React.FC = ({ children }) => {
   return (
@@ -18,7 +18,7 @@ const Layout: React.FC = ({ children }) => {
         <main>{children}</main>
       </div>
     </Styled.root>
-  );
-};
+  )
+}
 
-export default Layout;
+export default Layout

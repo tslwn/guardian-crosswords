@@ -1,23 +1,23 @@
-import React from 'react';
-import Helmet from 'react-helmet';
-import { useStaticQuery, graphql } from 'gatsby';
+import React from 'react'
+import Helmet from 'react-helmet'
+import { useStaticQuery, graphql } from 'gatsby'
 
 type Meta =
   | {
-      name: string;
-      content: string;
+      name: string
+      content: string
     }
   | {
-      property: string;
-      content: string;
-    };
+      property: string
+      content: string
+    }
 
 type Props = {
-  description?: string | undefined;
-  lang?: string | undefined;
-  meta?: Meta[];
-  title?: string | undefined;
-};
+  description?: string | undefined
+  lang?: string | undefined
+  meta?: Meta[]
+  title?: string | undefined
+}
 
 const SEO: React.FC<Props> = ({
   description = ``,
@@ -37,9 +37,9 @@ const SEO: React.FC<Props> = ({
         }
       }
     `
-  );
+  )
 
-  const metaDescription = description || site.siteMetadata.description;
+  const metaDescription = description || site.siteMetadata.description
 
   return (
     <Helmet
@@ -83,7 +83,7 @@ const SEO: React.FC<Props> = ({
         }
       ].concat(meta)}
     />
-  );
-};
+  )
+}
 
-export default SEO;
+export default SEO

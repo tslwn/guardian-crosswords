@@ -1,29 +1,29 @@
 /** @jsx jsx */
-import React from 'react';
-import { Styled, jsx } from 'theme-ui';
-import { graphql } from 'gatsby';
-import Crossword from 'react-crossword';
+import React from 'react'
+import { Styled, jsx } from 'theme-ui'
+import { graphql } from 'gatsby'
+import Crossword from 'react-crossword'
 
-import Layout from '../components/Layout';
-import SEO from '../components/SEO';
+import Layout from '../components/Layout'
+import SEO from '../components/SEO'
 
 interface CrosswordPageProps {
-  data: GatsbyTypes.CrosswordPageQuery;
-  pageContext: GatsbyTypes.CrosswordPageQueryVariables;
+  data: GatsbyTypes.CrosswordPageQuery
+  pageContext: GatsbyTypes.CrosswordPageQueryVariables
 }
 
 // TODO: handle 'possibly undefined better'
 const CrosswordTemplate: React.FC<CrosswordPageProps> = ({ data }) => {
-  const crosswordData = data?.guardianCrossword;
+  const crosswordData = data?.guardianCrossword
   if (crosswordData) {
     if (crosswordData.entries) {
       crosswordData.entries.forEach(
         (entry: any) =>
           (entry.separatorLocations = JSON.parse(entry?.separatorLocations))
-      );
+      )
     }
   }
-  const name = data?.guardianCrossword?.name || '';
+  const name = data?.guardianCrossword?.name || ''
 
   return (
     <Layout>
@@ -35,10 +35,10 @@ const CrosswordTemplate: React.FC<CrosswordPageProps> = ({ data }) => {
         <div>Oops!</div>
       )}
     </Layout>
-  );
-};
+  )
+}
 
-export default CrosswordTemplate;
+export default CrosswordTemplate
 
 export const query = graphql`
   query CrosswordPage($slug: String!) {
@@ -72,4 +72,4 @@ export const query = graphql`
       }
     }
   }
-`;
+`
