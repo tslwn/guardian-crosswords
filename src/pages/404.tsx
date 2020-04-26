@@ -2,8 +2,8 @@
 import React from 'react'
 import { Styled, jsx } from 'theme-ui'
 
-import Layout from '../components/layout'
-import SEO from '../components/seo'
+import Layout from '../components/Layout'
+import SEO from '../components/SEO'
 
 const NotFoundPage: React.FC = () => (
   <Layout>

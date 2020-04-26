@@ -4,8 +4,8 @@ import { Styled, jsx } from 'theme-ui'
 import { graphql } from 'gatsby'
 import Crossword from 'react-crossword'
 
-import Layout from '../components/layout'
-import SEO from '../components/seo'
+import Layout from '../components/Layout'
+import SEO from '../components/SEO'
 
 interface CrosswordPageProps {
   data: GatsbyTypes.CrosswordPageQuery
