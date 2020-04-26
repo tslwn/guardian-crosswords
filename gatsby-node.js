@@ -49,11 +49,10 @@ exports.sourceNodes = async (
 
         // Limit number of items per page if environment variable set
         const pageIds = $(crosswordItemClasses.join(''))
-          .filter(index =>
-            process.env.NODE_ENV === 'development'
-              ? index < process.env.CROSSWORD_ITEMS_PER_PAGE ||
-                !process.env.CROSSWORD_ITEMS_PER_PAGE
-              : true
+          .filter(
+            index =>
+              index < process.env.CROSSWORD_ITEMS_PER_PAGE ||
+              !process.env.CROSSWORD_ITEMS_PER_PAGE
           )
           .map((index, element) => $(element).attr('data-id'))
           // Exclude puzzles that can't be shown in the interactive format
@@ -93,10 +92,8 @@ exports.sourceNodes = async (
       // Increment page until 404
       status !== 404 &&
       // Limit number of pages per series if environment variable set
-      (process.env.NODE_ENV === 'development'
-        ? page <= process.env.CROSSWORD_PAGES_PER_SERIES ||
-          !process.env.CROSSWORD_PAGES_PER_SERIES
-        : true)
+      (page <= process.env.CROSSWORD_PAGES_PER_SERIES ||
+        !process.env.CROSSWORD_PAGES_PER_SERIES)
     )
 
     return ids
@@ -185,12 +182,11 @@ exports.sourceNodes = async (
   const crosswordIds = (
     await Promise.all(
       crosswordSeries
-        .filter((series, index) =>
-          // Limit number of series if environment variable set
-          process.env.NODE_ENV === 'development'
-            ? index < process.env.CROSSWORD_SERIES ||
-              !process.env.CROSSWORD_SERIES
-            : true
+        .filter(
+          (series, index) =>
+            // Limit number of series if environment variable set
+            index < process.env.CROSSWORD_SERIES ||
+            !process.env.CROSSWORD_SERIES
         )
         .map(series => fetchCrosswordIds(series))
     )
