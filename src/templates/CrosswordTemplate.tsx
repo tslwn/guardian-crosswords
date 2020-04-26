@@ -3,7 +3,6 @@ import React from 'react'
 import { Styled, jsx } from 'theme-ui'
 import { graphql } from 'gatsby'
 import Loadable from 'react-loadable'
-import Crossword from 'react-crossword'
 
 import Layout from '../components/Layout'
 import SEO from '../components/SEO'
@@ -14,8 +13,6 @@ interface CrosswordPageProps {
 }
 
 // TODO: handle SSR better...
-type CrosswordProps = any
-
 const LoadableCrossword: any = Loadable({
   loader: () => import('react-crossword'),
   loading: () => <div>Loading...</div>
