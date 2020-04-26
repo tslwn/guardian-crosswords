@@ -11,26 +11,22 @@ interface IndexPageProps {
   pageContext: GatsbyTypes.IndexPageQueryVariables
 }
 
-const IndexPage: React.FC<IndexPageProps> = ({ data }) => {
-  const crosswords = data?.allGuardianCrossword.edges
-  console.log(crosswords)
-  return (
-    <Layout>
-      <SEO title="Home" />
-      <Styled.h1>Guardian crosswords</Styled.h1>
-      <Box>
-        {crosswords.map(edge => {
-          const { id, crosswordType, name, number } = edge.node
-          return (
-            <Box key={id} py={2}>
-              <Link to={`/crosswords/${crosswordType}/${number}`}>{name}</Link>
-            </Box>
-          )
-        })}
-      </Box>
-    </Layout>
-  )
-}
+const IndexPage: React.FC<IndexPageProps> = ({ data }) => (
+  <Layout>
+    <SEO title="Home" />
+    <Styled.h1>Guardian crosswords</Styled.h1>
+    <Box>
+      {data?.allGuardianCrossword.edges.map(edge => {
+        const { id, crosswordType, name, number } = edge.node
+        return (
+          <Box key={id} py={2}>
+            <Link to={`/crosswords/${crosswordType}/${number}`}>{name}</Link>
+          </Box>
+        )
+      })}
+    </Box>
+  </Layout>
+)
 
 export default IndexPage
 
