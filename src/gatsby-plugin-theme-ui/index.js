@@ -6,4 +6,4 @@ export default {
   fonts: {
     body: `Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif`
   }
-}
+};

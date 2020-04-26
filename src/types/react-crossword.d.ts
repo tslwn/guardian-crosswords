@@ -1,2 +1,2 @@
 // TODO: type definitions!
-declare module 'react-crossword'
+declare module 'react-crossword';
