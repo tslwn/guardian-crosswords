@@ -5,6 +5,7 @@ module.exports = {
     author: `@tslwn`
   },
   plugins: [
+    `gatsby-plugin-netlify-cache`,
     `gatsby-plugin-typegen`,
     `gatsby-plugin-typescript`,
     {
