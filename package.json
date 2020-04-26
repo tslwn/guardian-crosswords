@@ -16,6 +16,7 @@
   "dependencies": {
     "@emotion/core": "^10.0.22",
     "@theme-ui/components": "^0.3.1",
+    "@types/react-loadable": "^5.5.3",
     "axios": "^0.19.2",
     "cheerio": "^1.0.0-rc.3",
     "gatsby": "^2.17.11",
@@ -31,6 +32,7 @@
     "react-crossword": "^0.1.7",
     "react-dom": "^16.11.0",
     "react-helmet": "^5.2.1",
+    "react-loadable": "^5.5.0",
     "theme-ui": "^0.3.1"
   },
   "devDependencies": {

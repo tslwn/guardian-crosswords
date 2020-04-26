@@ -2,6 +2,7 @@
 import React from 'react'
 import { Styled, jsx } from 'theme-ui'
 import { graphql } from 'gatsby'
+import Loadable from 'react-loadable'
 import Crossword from 'react-crossword'
 
 import Layout from '../components/Layout'
@@ -11,6 +12,18 @@ interface CrosswordPageProps {
   data: GatsbyTypes.CrosswordPageQuery
   pageContext: GatsbyTypes.CrosswordPageQueryVariables
 }
+
+// TODO: handle SSR better...
+type CrosswordProps = any
+
+const LoadableCrossword = Loadable({
+  loader: () => import('react-crossword'),
+  loading: () => <div>Loading...</div>,
+  render(loaded, props: CrosswordProps) {
+    let Component = loaded.namedExport
+    return <Component {...props} />
+  }
+})
 
 // TODO: handle 'possibly undefined better'
 const CrosswordTemplate: React.FC<CrosswordPageProps> = ({ data }) => {
@@ -30,7 +43,7 @@ const CrosswordTemplate: React.FC<CrosswordPageProps> = ({ data }) => {
       <SEO title={name} />
       <Styled.h1>{name}</Styled.h1>
       {crosswordData ? (
-        <Crossword data={crosswordData} id={crosswordData.id} />
+        <LoadableCrossword data={crosswordData} id={crosswordData.id} />
       ) : (
         <div>Oops!</div>
       )}
