@@ -16,13 +16,9 @@ interface CrosswordPageProps {
 // TODO: handle SSR better...
 type CrosswordProps = any
 
-const LoadableCrossword = Loadable({
+const LoadableCrossword: any = Loadable({
   loader: () => import('react-crossword'),
-  loading: () => <div>Loading...</div>,
-  render(loaded, props: CrosswordProps) {
-    let Component = loaded.namedExport
-    return <Component {...props} />
-  }
+  loading: () => <div>Loading...</div>
 })
 
 // TODO: handle 'possibly undefined better'
