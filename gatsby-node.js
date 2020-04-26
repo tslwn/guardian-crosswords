@@ -1,6 +1,7 @@
 // TODO: improve logging
 const axios = require('axios')
 const cheerio = require('cheerio')
+const path = require('path')
 
 // TODO: remove limit on series
 const crosswordSeries = [
@@ -113,7 +114,9 @@ exports.sourceNodes = async (
         type: `GuardianCrossword`,
         content: nodeContent,
         contentDigest: createContentDigest(crossword)
-      }
+      },
+      // use original ID as slug
+      slug: crossword.id
     })
     return nodeData
   }
@@ -129,5 +132,30 @@ exports.sourceNodes = async (
 
   crosswordData.forEach(crossword => {
     createNode(processCrossword(crossword))
+  })
+}
+
+exports.createPages = async ({ graphql, actions }) => {
+  const { createPage } = actions
+  const result = await graphql(`
+    query {
+      allGuardianCrossword {
+        edges {
+          node {
+            slug
+          }
+        }
+      }
+    }
+  `)
+
+  result.data.allGuardianCrossword.edges.forEach(({ node }) => {
+    createPage({
+      path: node.slug,
+      component: path.resolve('./src/templates/CrosswordTemplate.tsx'),
+      context: {
+        slug: node.slug
+      }
+    })
   })
 }

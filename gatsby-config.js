@@ -5,6 +5,7 @@ module.exports = {
     author: `@tslwn`
   },
   plugins: [
+    `gatsby-plugin-typegen`,
     `gatsby-plugin-typescript`,
     {
       resolve: `gatsby-plugin-webfonts`,
