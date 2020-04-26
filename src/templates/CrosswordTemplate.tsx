@@ -29,7 +29,11 @@ const CrosswordTemplate: React.FC<CrosswordPageProps> = ({ data }) => {
     <Layout>
       <SEO title={name} />
       <Styled.h1>{name}</Styled.h1>
-      {crosswordData ? <Crossword data={crosswordData} /> : <div>Oops!</div>}
+      {crosswordData ? (
+        <Crossword data={crosswordData} id={crosswordData.id} />
+      ) : (
+        <div>Oops!</div>
+      )}
     </Layout>
   )
 }
