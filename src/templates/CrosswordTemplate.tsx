@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import React from 'react'
-import { jsx, Box, Spinner } from 'theme-ui'
+import { jsx, Spinner } from 'theme-ui'
 import { graphql } from 'gatsby'
 import Loadable from 'react-loadable'
 
