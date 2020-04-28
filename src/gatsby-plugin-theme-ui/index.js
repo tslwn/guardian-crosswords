@@ -9,7 +9,7 @@ export default {
   },
   fonts: {
     body: '"Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif',
-    heading: '"PT Serif", serif'
+    heading: 'inherit'
   },
   fontSizes: [12, 14, 16, 20, 24, 32, 48, 64, 96],
   fontWeights: {

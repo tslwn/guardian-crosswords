@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import React from 'react'
-import { jsx, Spinner } from 'theme-ui'
+import { jsx, Box, Spinner } from 'theme-ui'
 import { graphql } from 'gatsby'
 import Loadable from 'react-loadable'
 
@@ -37,13 +37,13 @@ const CrosswordTemplate: React.FC<CrosswordPageProps> = ({ data }) => {
     <Layout>
       <SEO title={name} />
       <Header title={name} />
-      <main sx={{ px: 3 }}>
+      <Box as="main" sx={{ flex: '1 1 auto', px: 3, pt: [0, 3] }}>
         {crosswordData ? (
           <LoadableCrossword data={crosswordData} id={crosswordData.id} />
         ) : (
           `Crossword not found`
         )}
-      </main>
+      </Box>
       <Footer />
     </Layout>
   )

@@ -1,10 +1,10 @@
 /** @jsx jsx */
 import React from 'react'
-import { Styled, jsx } from 'theme-ui'
+import { Styled, jsx, Box } from 'theme-ui'
 import { Link } from 'gatsby'
 
 const Footer: React.FC = () => (
-  <footer sx={{ bg: 'primary', color: 'white', p: 3 }}>
+  <Box as="footer" sx={{ bg: 'primary', color: 'white', p: 3, width: '100%' }}>
     <Styled.a
       as={Link}
       sx={{ color: 'white', ':visited': { color: 'secondary' } }}
@@ -13,7 +13,7 @@ const Footer: React.FC = () => (
     >
       Home
     </Styled.a>
-  </footer>
+  </Box>
 )
 
 export default Footer

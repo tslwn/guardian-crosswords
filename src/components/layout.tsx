@@ -8,7 +8,13 @@ import theme from '../gatsby-plugin-theme-ui'
 const Layout: React.FC = ({ children }) => {
   return (
     <ThemeProvider theme={theme}>
-      <Styled.root sx={{ maxWidth: 'container', marginX: 'auto' }}>
+      <Styled.root
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          minHeight: '100vh'
+        }}
+      >
         {children}
       </Styled.root>
     </ThemeProvider>

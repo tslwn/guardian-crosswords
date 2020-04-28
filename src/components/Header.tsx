@@ -1,11 +1,11 @@
 /** @jsx jsx */
 import React from 'react'
-import { jsx, Heading } from 'theme-ui'
+import { jsx, Box, Heading } from 'theme-ui'
 
 const Header: React.FC<{ title: string }> = ({ title }) => (
-  <header sx={{ bg: 'primary', color: 'white', p: 3 }}>
+  <Box as="header" sx={{ bg: 'primary', color: 'white', p: 3, width: '100%' }}>
     <Heading as="h1">{title}</Heading>
-  </header>
+  </Box>
 )
 
 export default Header

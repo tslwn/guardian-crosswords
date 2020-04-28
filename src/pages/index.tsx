@@ -7,6 +7,7 @@ import { CrosswordType, crosswordTypes } from '../models/crossword'
 import Footer from '../components/Footer'
 import Header from '../components/Header'
 import Layout from '../components/Layout'
+import Main from '../components/Main'
 import SEO from '../components/SEO'
 
 interface IndexPageProps {
@@ -22,8 +23,8 @@ interface TypeListProps {
 const capitalise = (string: string) =>
   `${string.charAt(0).toUpperCase()}${string.slice(1)}`
 
-const formatDate = (date: number) =>
-  new Date(date)
+const formatDate = (date?: number) =>
+  new Date(date || '')
     .toLocaleString('en-GB', {
       weekday: 'short',
       day: 'numeric',
@@ -32,7 +33,7 @@ const formatDate = (date: number) =>
     .replace(',', '')
 
 const TypeList: React.FC<TypeListProps> = ({ data, type }) => (
-  <Box as="section" id={type} sx={{ bg: 'muted', p: 3 }}>
+  <Box as="section" id={type} sx={{ p: 3 }}>
     <Heading as="h2">{capitalise(type)}</Heading>
     <Divider />
     <Styled.ul>
@@ -46,9 +47,9 @@ const TypeList: React.FC<TypeListProps> = ({ data, type }) => (
                 as={Link}
                 // @ts-ignore
                 to={`/${slug}`}
-              >{`${
-                date ? `${formatDate(date)}` : ''
-              } / No ${number?.toLocaleString()} `}</Styled.a>
+              >{`${formatDate(
+                date
+              )} / No ${number?.toLocaleString()} `}</Styled.a>
             </Box>
           )
         })}
@@ -60,13 +61,13 @@ const IndexPage: React.FC<IndexPageProps> = ({ data }) => (
   <Layout>
     <SEO title="Guardian crosswords" />
     <Header title="Guardian crosswords" />
-    <main>
-      <Grid gap={0} columns={[1, 2, null, 4]}>
+    <Main>
+      <Grid columns={[1, 2, null, 4]} gap={0} sx={{ bg: 'muted ' }}>
         {crosswordTypes.map(type => (
           <TypeList data={data} type={type} />
         ))}
       </Grid>
-    </main>
+    </Main>
     <Footer />
   </Layout>
 )
