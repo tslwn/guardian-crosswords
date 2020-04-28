@@ -26,6 +26,7 @@
     "gatsby-plugin-theme-ui": "^0.3.0",
     "gatsby-plugin-typegen": "^2.1.0",
     "gatsby-plugin-typescript": "^2.3.1",
+    "gatsby-plugin-webfonts": "^1.1.2",
     "gatsby-theme-style-guide": "^0.3.1",
     "normalize.css": "^8.0.1",
     "react": "^16.11.0",

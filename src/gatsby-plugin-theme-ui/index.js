@@ -8,8 +8,9 @@ export default {
     muted: '#f6f6f6'
   },
   fonts: {
-    body: '"Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif',
-    heading: 'inherit'
+    body:
+      'Roboto, "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif',
+    heading: '"Roboto Slab", Georgia, "Times New Roman", Times, serif'
   },
   fontSizes: [12, 14, 16, 20, 24, 32, 48, 64, 96],
   fontWeights: {
