@@ -1,16 +1,17 @@
 /** @jsx jsx */
 import React from 'react'
-import { jsx, Heading } from 'theme-ui'
+import { jsx } from 'theme-ui'
 
+import Footer from '../components/Footer'
+import Header from '../components/Header'
 import Layout from '../components/Layout'
 import SEO from '../components/SEO'
 
 const NotFoundPage: React.FC = () => (
   <Layout>
     <SEO title="404" />
-    <header>
-      <Heading as="h1">404</Heading>
-    </header>
+    <Header title="404" />
+    <Footer />
   </Layout>
 )
 

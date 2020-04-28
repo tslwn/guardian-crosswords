@@ -1,9 +1,11 @@
 /** @jsx jsx */
 import React from 'react'
-import { Styled, jsx, Box, Grid, Heading } from 'theme-ui'
+import { Styled, jsx, Box, Divider, Grid, Heading } from 'theme-ui'
 import { graphql, Link } from 'gatsby'
 
 import { CrosswordType, crosswordTypes } from '../models/crossword'
+import Footer from '../components/Footer'
+import Header from '../components/Header'
 import Layout from '../components/Layout'
 import SEO from '../components/SEO'
 
@@ -17,6 +19,9 @@ interface TypeListProps {
   type: CrosswordType
 }
 
+const capitalise = (string: string) =>
+  `${string.charAt(0).toUpperCase()}${string.slice(1)}`
+
 const formatDate = (date: number) =>
   new Date(date)
     .toLocaleString('en-GB', {
@@ -27,20 +32,23 @@ const formatDate = (date: number) =>
     .replace(',', '')
 
 const TypeList: React.FC<TypeListProps> = ({ data, type }) => (
-  <Box as="section" id={type}>
-    <Heading as="h2">{type}</Heading>
+  <Box as="section" id={type} sx={{ bg: 'muted', p: 3 }}>
+    <Heading as="h2">{capitalise(type)}</Heading>
+    <Divider />
     <Styled.ul>
       {data?.allGuardianCrossword.edges
         .filter(edge => edge.node.crosswordType === type)
         .map(edge => {
           const { id, date, number, slug } = edge.node
           return (
-            <Box as="li" key={id} py={1}>
+            <Box as="li" key={id}>
               <Styled.a
                 as={Link}
                 // @ts-ignore
                 to={`/${slug}`}
-              >{`No ${number} ${date ? formatDate(date) : ''}`}</Styled.a>
+              >{`${
+                date ? `${formatDate(date)}` : ''
+              } / No ${number?.toLocaleString()} `}</Styled.a>
             </Box>
           )
         })}
@@ -50,17 +58,16 @@ const TypeList: React.FC<TypeListProps> = ({ data, type }) => (
 
 const IndexPage: React.FC<IndexPageProps> = ({ data }) => (
   <Layout>
-    <SEO title="Home" />
-    <header>
-      <Heading as="h1">Guardian crosswords</Heading>
-    </header>
+    <SEO title="Guardian crosswords" />
+    <Header title="Guardian crosswords" />
     <main>
-      <Grid gap={2} columns={[1, 2, null, 4]}>
+      <Grid gap={0} columns={[1, 2, null, 4]}>
         {crosswordTypes.map(type => (
           <TypeList data={data} type={type} />
         ))}
       </Grid>
     </main>
+    <Footer />
   </Layout>
 )
 

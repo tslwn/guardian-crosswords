@@ -1,9 +1,11 @@
 /** @jsx jsx */
 import React from 'react'
-import { jsx, Box, Heading, Spinner } from 'theme-ui'
+import { jsx, Box, Spinner } from 'theme-ui'
 import { graphql } from 'gatsby'
 import Loadable from 'react-loadable'
 
+import Footer from '../components/Footer'
+import Header from '../components/Header'
 import Layout from '../components/Layout'
 import SEO from '../components/SEO'
 
@@ -34,16 +36,15 @@ const CrosswordTemplate: React.FC<CrosswordPageProps> = ({ data }) => {
   return (
     <Layout>
       <SEO title={name} />
-      <header>
-        <Heading as="h1">{name}</Heading>
-      </header>
-      <main>
+      <Header title={name} />
+      <main sx={{ px: 3 }}>
         {crosswordData ? (
           <LoadableCrossword data={crosswordData} id={crosswordData.id} />
         ) : (
           `Crossword not found`
         )}
       </main>
+      <Footer />
     </Layout>
   )
 }

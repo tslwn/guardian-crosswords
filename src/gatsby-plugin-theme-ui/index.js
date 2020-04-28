@@ -1,10 +1,15 @@
 export default {
-  space: [0, 4, 8, 16, 32, 64, 128, 256, 512],
+  colors: {
+    text: '#121212',
+    background: '#fff',
+    primary: '#052962',
+    secondary: '#ffe500',
+    accent: '#bb3b80',
+    muted: '#f6f6f6'
+  },
   fonts: {
-    body:
-      'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif',
-    heading: 'inherit',
-    monospace: 'Menlo, monospace'
+    body: '"Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif',
+    heading: '"PT Serif", serif'
   },
   fontSizes: [12, 14, 16, 20, 24, 32, 48, 64, 96],
   fontWeights: {
@@ -16,14 +21,10 @@ export default {
     body: 1.5,
     heading: 1.125
   },
-  colors: {
-    text: '#121212',
-    background: '#fff',
-    primary: '#052962',
-    secondary: '#ffe500',
-    accent: '#bb3b80',
-    muted: '#f6f6f6'
+  sizes: {
+    container: 960
   },
+  space: [0, 4, 8, 16, 32, 64, 128, 256, 512],
   styles: {
     root: {
       fontFamily: 'body',
@@ -79,37 +80,15 @@ export default {
       lineHeight: 'body'
     },
     a: {
-      color: 'primary'
-    },
-    pre: {
-      fontFamily: 'monospace',
-      overflowX: 'auto',
-      code: {
-        color: 'inherit'
+      color: 'text',
+      textDecoration: 'none',
+      ':visited': {
+        color: 'accent'
       }
-    },
-    code: {
-      fontFamily: 'monospace',
-      fontSize: 'inherit'
-    },
-    table: {
-      width: '100%',
-      borderCollapse: 'separate',
-      borderSpacing: 0
-    },
-    th: {
-      textAlign: 'left',
-      borderBottomStyle: 'solid'
-    },
-    td: {
-      textAlign: 'left',
-      borderBottomStyle: 'solid'
-    },
-    img: {
-      maxWidth: '100%'
     },
     ul: {
       listStyleType: 'none',
+      margin: 0,
       padding: 0
     }
   }
