@@ -1,8 +1,9 @@
 /** @jsx jsx */
 import React from 'react'
-import { Styled, jsx, Box } from 'theme-ui'
+import { Styled, jsx, Box, Grid, Heading, Text } from 'theme-ui'
 import { graphql, Link } from 'gatsby'
 
+import { CrosswordType, crosswordTypes } from '../models/crossword'
 import Layout from '../components/Layout'
 import SEO from '../components/SEO'
 
@@ -11,20 +12,60 @@ interface IndexPageProps {
   pageContext: GatsbyTypes.IndexPageQueryVariables
 }
 
+interface CrosswordTypeProps {
+  data: GatsbyTypes.IndexPageQuery
+  type: CrosswordType
+}
+
+const formatDate = (date: number) =>
+  new Date(date)
+    .toLocaleString('en-GB', {
+      weekday: 'short',
+      day: 'numeric',
+      month: 'short'
+    })
+    .replace(',', '')
+
+const TypeList: React.FC<CrosswordTypeProps> = ({ data, type }) => {
+  const crosswords = ''
+
+  return (
+    <Box as="section" id={type}>
+      <Heading as="h2">{type}</Heading>
+      <Styled.ul>
+        {data?.allGuardianCrossword.edges
+          .filter(edge => edge.node.crosswordType === type)
+          .map(edge => {
+            const { id, date, number, slug } = edge.node
+            return (
+              <Box as="li" key={id} py={1}>
+                <Styled.a
+                  as={Link}
+                  // @ts-ignore
+                  to={`/${slug}`}
+                >{`No ${number} ${date ? formatDate(date) : ''}`}</Styled.a>
+              </Box>
+            )
+          })}
+      </Styled.ul>
+    </Box>
+  )
+}
+
+// TODO: tidy up ...
 const IndexPage: React.FC<IndexPageProps> = ({ data }) => (
   <Layout>
     <SEO title="Home" />
-    <Styled.h1>Guardian crosswords</Styled.h1>
-    <Box>
-      {data?.allGuardianCrossword.edges.map(edge => {
-        const { id, crosswordType, name, number } = edge.node
-        return (
-          <Box key={id} py={2}>
-            <Link to={`/crosswords/${crosswordType}/${number}`}>{name}</Link>
-          </Box>
-        )
-      })}
-    </Box>
+    <header>
+      <Heading as="h1">Guardian crosswords</Heading>
+    </header>
+    <main>
+      <Grid gap={2} columns={[1, 2, null, 4]}>
+        {crosswordTypes.map(type => (
+          <TypeList data={data} type={type} />
+        ))}
+      </Grid>
+    </main>
   </Layout>
 )
 
@@ -42,6 +83,7 @@ export const query = graphql`
           crosswordType
           name
           number
+          slug
         }
       }
     }

@@ -10,16 +10,7 @@ module.exports = {
     `gatsby-plugin-typescript`,
     {
       resolve: `gatsby-plugin-webfonts`,
-      options: {
-        fonts: {
-          google: [
-            {
-              family: `Roboto`,
-              variants: [`400`]
-            }
-          ]
-        }
-      }
+      options: {}
     },
     `gatsby-plugin-react-helmet`,
     `gatsby-plugin-theme-ui`,
