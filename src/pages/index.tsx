@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import React from 'react'
-import { Styled, jsx, Box, Grid, Heading, Text } from 'theme-ui'
+import { Styled, jsx, Box, Grid, Heading } from 'theme-ui'
 import { graphql, Link } from 'gatsby'
 
 import { CrosswordType, crosswordTypes } from '../models/crossword'
@@ -12,7 +12,7 @@ interface IndexPageProps {
   pageContext: GatsbyTypes.IndexPageQueryVariables
 }
 
-interface CrosswordTypeProps {
+interface TypeListProps {
   data: GatsbyTypes.IndexPageQuery
   type: CrosswordType
 }
@@ -26,33 +26,28 @@ const formatDate = (date: number) =>
     })
     .replace(',', '')
 
-const TypeList: React.FC<CrosswordTypeProps> = ({ data, type }) => {
-  const crosswords = ''
+const TypeList: React.FC<TypeListProps> = ({ data, type }) => (
+  <Box as="section" id={type}>
+    <Heading as="h2">{type}</Heading>
+    <Styled.ul>
+      {data?.allGuardianCrossword.edges
+        .filter(edge => edge.node.crosswordType === type)
+        .map(edge => {
+          const { id, date, number, slug } = edge.node
+          return (
+            <Box as="li" key={id} py={1}>
+              <Styled.a
+                as={Link}
+                // @ts-ignore
+                to={`/${slug}`}
+              >{`No ${number} ${date ? formatDate(date) : ''}`}</Styled.a>
+            </Box>
+          )
+        })}
+    </Styled.ul>
+  </Box>
+)
 
-  return (
-    <Box as="section" id={type}>
-      <Heading as="h2">{type}</Heading>
-      <Styled.ul>
-        {data?.allGuardianCrossword.edges
-          .filter(edge => edge.node.crosswordType === type)
-          .map(edge => {
-            const { id, date, number, slug } = edge.node
-            return (
-              <Box as="li" key={id} py={1}>
-                <Styled.a
-                  as={Link}
-                  // @ts-ignore
-                  to={`/${slug}`}
-                >{`No ${number} ${date ? formatDate(date) : ''}`}</Styled.a>
-              </Box>
-            )
-          })}
-      </Styled.ul>
-    </Box>
-  )
-}
-
-// TODO: tidy up ...
 const IndexPage: React.FC<IndexPageProps> = ({ data }) => (
   <Layout>
     <SEO title="Home" />
