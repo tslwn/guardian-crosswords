@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import React from 'react'
-import { Styled, jsx } from 'theme-ui'
+import { jsx, Box, Heading, Spinner } from 'theme-ui'
 import { graphql } from 'gatsby'
 import Loadable from 'react-loadable'
 
@@ -15,7 +15,7 @@ interface CrosswordPageProps {
 // TODO: handle SSR better...
 const LoadableCrossword: any = Loadable({
   loader: () => import('react-crossword'),
-  loading: () => <div>Loading...</div>
+  loading: () => <Spinner />
 })
 
 // TODO: handle 'possibly undefined better'
@@ -34,12 +34,16 @@ const CrosswordTemplate: React.FC<CrosswordPageProps> = ({ data }) => {
   return (
     <Layout>
       <SEO title={name} />
-      <Styled.h1>{name}</Styled.h1>
-      {crosswordData ? (
-        <LoadableCrossword data={crosswordData} id={crosswordData.id} />
-      ) : (
-        <div>Oops!</div>
-      )}
+      <header>
+        <Heading as="h1">{name}</Heading>
+      </header>
+      <main>
+        {crosswordData ? (
+          <LoadableCrossword data={crosswordData} id={crosswordData.id} />
+        ) : (
+          `Crossword not found`
+        )}
+      </main>
     </Layout>
   )
 }
