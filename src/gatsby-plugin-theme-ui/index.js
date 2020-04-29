@@ -83,6 +83,9 @@ export default {
     a: {
       color: 'text',
       textDecoration: 'none',
+      ':hover': {
+        textDecoration: 'underline'
+      },
       ':visited': {
         color: 'accent'
       }
