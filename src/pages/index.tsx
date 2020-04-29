@@ -10,9 +10,17 @@ import Layout from '../components/Layout'
 import Main from '../components/Main'
 import SEO from '../components/SEO'
 
+// TODO: tidy up components ...
 interface IndexPageProps {
   data: GatsbyTypes.IndexPageQuery
   pageContext: GatsbyTypes.IndexPageQueryVariables
+}
+
+interface TypeListItemProps {
+  id: string
+  date?: number
+  number?: number
+  slug?: string
 }
 
 interface TypeListProps {
@@ -23,14 +31,41 @@ interface TypeListProps {
 const capitalise = (string: string) =>
   `${string.charAt(0).toUpperCase()}${string.slice(1)}`
 
-const formatDate = (date?: number) =>
-  new Date(date || '')
-    .toLocaleString('en-GB', {
-      weekday: 'short',
-      day: 'numeric',
-      month: 'short'
-    })
-    .replace(',', '')
+const TypeListItem: React.FC<TypeListItemProps> = ({
+  id,
+  date,
+  number,
+  slug
+}) => {
+  // defer render to preserve localisation
+  const [showItem, setShowItem] = React.useState(false)
+  React.useLayoutEffect(() => {
+    setShowItem(true)
+  })
+
+  const numberString = number?.toLocaleString()
+  const dateString = date
+    ? new Date(date)
+        .toLocaleString(undefined, {
+          weekday: 'short',
+          day: 'numeric',
+          month: 'short'
+        })
+        .replace(',', '')
+    : ''
+
+  return (
+    <Box as="li" key={id}>
+      <Styled.a
+        as={Link}
+        // @ts-ignore
+        to={`/${slug}`}
+      >
+        {setShowItem ? `${numberString} / ${dateString}` : ''}
+      </Styled.a>
+    </Box>
+  )
+}
 
 const TypeList: React.FC<TypeListProps> = ({ data, type }) => (
   <Box as="section" id={type} sx={{ p: 3 }}>
@@ -39,20 +74,9 @@ const TypeList: React.FC<TypeListProps> = ({ data, type }) => (
     <Styled.ul>
       {data?.allGuardianCrossword.edges
         .filter(edge => edge.node.crosswordType === type)
-        .map(edge => {
-          const { id, date, number, slug } = edge.node
-          return (
-            <Box as="li" key={id}>
-              <Styled.a
-                as={Link}
-                // @ts-ignore
-                to={`/${slug}`}
-              >{`${formatDate(
-                date
-              )} / No ${number?.toLocaleString()} `}</Styled.a>
-            </Box>
-          )
-        })}
+        .map(edge => (
+          <TypeListItem {...edge.node} />
+        ))}
     </Styled.ul>
   </Box>
 )
