@@ -39,7 +39,7 @@ const TypeListItem: React.FC<TypeListItemProps> = ({
 }) => {
   // defer render to preserve localisation
   const [showItem, setShowItem] = React.useState(false)
-  React.useLayoutEffect(() => {
+  React.useEffect(() => {
     setShowItem(true)
   })
 
@@ -75,7 +75,7 @@ const TypeList: React.FC<TypeListProps> = ({ data, type }) => (
       {data?.allGuardianCrossword.edges
         .filter(edge => edge.node.crosswordType === type)
         .map(edge => (
-          <TypeListItem {...edge.node} />
+          <TypeListItem key={edge.node.id} {...edge.node} />
         ))}
     </Styled.ul>
   </Box>
@@ -88,7 +88,7 @@ const IndexPage: React.FC<IndexPageProps> = ({ data }) => (
     <Main>
       <Grid columns={[1, 2, null, 4]} gap={0} sx={{ bg: 'muted ' }}>
         {crosswordTypes.map(type => (
-          <TypeList data={data} type={type} />
+          <TypeList key={type} data={data} type={type} />
         ))}
       </Grid>
     </Main>
