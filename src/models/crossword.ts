@@ -14,7 +14,9 @@ export type CrosswordEntry = {
     x: number
     y: number
   }
-  separatorLocations: Record<CrosswordSeparator, Array<number> | undefined>
+  separatorLocations: Partial<
+    Record<CrosswordSeparator, Array<number> | undefined>
+  >
   solution: string
 }
 
