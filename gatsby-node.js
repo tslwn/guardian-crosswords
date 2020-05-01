@@ -1,9 +1,14 @@
-// TODO: improve logging
+// TODO: reduce duplication in logging
 const axios = require('axios')
 const cheerio = require('cheerio')
 const path = require('path')
 
 require('dotenv').config({ path: `.env.${process.env.NODE_ENV}` })
+
+const colorReset = '\x1b[0m'
+const colorFgBlue = '\x1b[34m'
+const colorFgGreen = '\x1b[32m'
+const colorFgRed = '\x1b[31m'
 
 exports.sourceNodes = async (
   { actions, cache, createNodeId, createContentDigest },
@@ -34,6 +39,31 @@ exports.sourceNodes = async (
     '.js-snappable'
   ]
 
+  const logFetch = (message, status) => {
+    console.log(
+      `${
+        status === 200 ? `${colorFgGreen}success` : `${colorFgRed}failed`
+      }${colorReset} fetch ${message}${status !== 200 ? ` - ${status}` : ``}`
+    )
+  }
+
+  const logError = (message, error) => {
+    if (error.response) {
+      status = error.response.status
+      console.log(
+        `${colorFgRed}failed${colorReset} fetch ${message} - ${error.response.status}`
+      )
+    } else if (error.request) {
+      console.log(
+        `${colorFgRed}failed${colorReset} fetch ${message} - ${error.request}`
+      )
+    } else {
+      console.log(
+        `${colorFgRed}failed${colorReset} fetch ${message} - ${error.message}`
+      )
+    }
+  }
+
   const fetchCrosswordIds = async series => {
     let page = 1
     let ids = []
@@ -42,9 +72,11 @@ exports.sourceNodes = async (
     do {
       try {
         const siteUrl = `https://www.theguardian.com/crosswords/series/${series}?page=${page}`
-        console.log(siteUrl)
-
         const response = await axios.get(siteUrl)
+
+        status = response.status
+        logFetch(`crosswords/series/${series}?page=${page}`, status)
+
         const $ = cheerio.load(response.data)
 
         // Limit number of items per page if environment variable set
@@ -70,23 +102,14 @@ exports.sourceNodes = async (
           const highestNumberVisited = await cache.get(`${series}/max`)
           if (pageIds.includes(highestNumberVisited)) {
             console.log(
-              `${series}/max ${highestNumberVisited} reached in cache`
+              `${colorFgBlue}info${colorReset} ${series}/max ${highestNumberVisited} reached in cache`
             )
             break
           }
         }
         page++
       } catch (error) {
-        if (error.response) {
-          status = error.response.status
-          // console.log(error.response.data)
-          console.log(error.response.status)
-          // console.log(error.response.headers)
-        } else if (error.request) {
-          console.log(error.request)
-        } else {
-          console.log(error.message)
-        }
+        logError(error)
       }
     } while (
       // Increment page until 404
@@ -100,26 +123,21 @@ exports.sourceNodes = async (
   }
 
   const fetchCrosswordData = async id => {
+    let status
     try {
       const siteUrl = `https://www.theguardian.com/${id}`
-      console.log(siteUrl)
-
       const response = await axios.get(siteUrl)
+
+      status = response.status
+      logFetch(`${id}`, status)
+
       return JSON.parse(
         cheerio
           .load(response.data)('.js-crossword')
           .attr('data-crossword-data')
       )
     } catch (error) {
-      if (error.response) {
-        // console.log(error.response.data)
-        console.log(error.response.status)
-        // console.log(error.response.headers)
-      } else if (error.request) {
-        console.log(error.request)
-      } else {
-        console.log(error.message)
-      }
+      logError(error)
     }
   }
 
@@ -128,13 +146,13 @@ exports.sourceNodes = async (
 
     const valueFromCache = await cache.get(id)
     if (valueFromCache) {
-      console.log(`${id} retrieved from cache`)
+      console.log(`${colorFgBlue}info${colorReset} ${id} retrieved from cache`)
       return valueFromCache
     } else {
       // Cache crossword data
       const value = await fetchCrosswordData(id)
       const valueToCache = await cache.set(id, value)
-      console.log(`${id} added to cache`)
+      console.log(`${colorFgBlue}info${colorReset} ${id} added to cache`)
 
       // If build is not limited by environment variables, update highest number
       // visited for series
@@ -146,7 +164,9 @@ exports.sourceNodes = async (
         const previousMax = await cache.get(`${series}/max`)
         if (previousMax === undefined || number > previousMax) {
           const newMax = await cache.set(`${series}/max`, number)
-          console.log(`${series}/max updated to ${newMax}`)
+          console.log(
+            `${colorFgBlue}info${colorReset} ${series}/max updated to ${newMax}`
+          )
         }
       }
 
