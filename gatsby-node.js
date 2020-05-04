@@ -109,7 +109,7 @@ exports.sourceNodes = async (
         }
         page++
       } catch (error) {
-        logError(error)
+        logError(`crosswords/series/${series}?page=${page}`, error)
       }
     } while (
       // Increment page until 404
@@ -137,7 +137,7 @@ exports.sourceNodes = async (
           .attr('data-crossword-data')
       )
     } catch (error) {
-      logError(error)
+      logError(`https://www.theguardian.com/${id}`, error)
     }
   }
 
